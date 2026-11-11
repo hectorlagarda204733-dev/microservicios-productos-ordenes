@@ -9,8 +9,9 @@ import jakarta.persistence.Entity;
 @Entity
 public class Orden extends PanacheEntity {
 
-    public Long productId;
-    public String productName;
+    public Long productId;//principal
+
+    public String productName; //prodct
 
     public Orden() {
     }

@@ -26,15 +26,18 @@ public class OrdenResource {
 
     @GET
     public List<Orden> listar() {
+        //lista
         return Orden.listAll();
     }
 
     @POST
     @Transactional
+
+    // metodo para crear la orden y producto
     public Response crearOrden(Long productId) {
         Producto producto;
         try {
-            // llamada distribuida al microservicio de productos
+            // llamada que se distribuye  al microservicio de productos
             producto = productClient.getById(productId);
         } catch (WebApplicationException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("El producto no existe").build();
@@ -42,7 +45,9 @@ public class OrdenResource {
 
         Orden orden = new Orden();
         orden.productId = producto.id;
+
         orden.productName = producto.name;
+        //guardamos bd
         orden.persist();
 
         return Response.status(Response.Status.CREATED).entity(orden).build();
